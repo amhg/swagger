@@ -1,11 +1,22 @@
+application:
+  api:
+    swagger:
+      path: /api-docs/swagger
+      version: 3.19.4
+      layout: StandaloneLayout
+      deepLinking: true
+      urls:
+        - name: swagger-server
+          url: /api-docs/swagger/swagger-server-0.1.yml
+
 micronaut:
   application:
-    name: openapi
+    name: swagger-server
   router:
     static-resources:
       swagger:
         paths: classpath:META-INF/swagger
-        mapping: /swagger/**
-      swagger-ui:
-        paths: classpath:META-INF/swagger/views/swagger-ui
-        mapping: /swagger-ui/**
+        mapping: ${application.api.swagger.path}/**
+#      swagger-ui:
+#        paths: classpath:META-INF/swagger/views/swagger-ui
+#        mapping: /swagger-ui/**
