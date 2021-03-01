@@ -18,7 +18,7 @@ public class SwaggerController {
   @Inject
   SwaggerConfig config;
 
-  @View("views.swagger/index")
+  @View("swagger/index")
   @Get
   public SwaggerConfig index() {
     LoggerFactory.getLogger(SwaggerController.class).info("Trying to render swagger-view");
