@@ -8,6 +8,8 @@ application:
       urls:
         - name: swagger-server
           url: /api-docs/swagger/swagger-server-0.1.yml
+        - name: account
+          url: /api-docs/swagger/account-server-0.1.yml
 
 micronaut:
   application:
