@@ -14,8 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import java.net.URL;
 import java.util.Optional;
+
+import static java.util.Collections.singletonList;
 
 @Hidden
 @Controller("/api")
@@ -36,8 +39,23 @@ public class SwaggerController {
     return config;
   }
 
-  @Get("/account")
-  public HttpResponse loadApiResource(HttpRequest request) {
+  @View("swagger/index")
+  @Get("/{url}")
+  public SwaggerConfig renderSpec(@NotNull String url) {
+    LoggerFactory.getLogger(SwaggerController.class).info("In URL");
+    return new SwaggerConfig.Builder()
+      .withDeepLinking(config.isDeepLinking())
+      .withLayout(config.getLayout())
+      .withVersion(config.getVersion())
+      .withUrls(singletonList(new SwaggerConfig.URIConfig.Builder()
+        .withName(url)
+        .withURI(url)
+        .build()))
+      .build();
+  }
+
+  @Get("/api-docs/swagger/{path:.+}")
+  public HttpResponse loadApiResource(HttpRequest request, String path) {
     String resourcePath = "classpath:META-INF/swagger/" + "account-server-0.1.yml";
     return buildResponseFromResource(resourcePath);
   }
